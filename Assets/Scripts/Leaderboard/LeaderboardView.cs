@@ -29,6 +29,7 @@ public class LeaderboardView : MonoBehaviour, ILeaderboardObserver      //Contro
         _itemWidth = _scoreItemPrefab.GetComponent<RectTransform>().rect.width;
         _scrollRect.GetComponent<RectTransform>().sizeDelta = new Vector2(_itemWidth, _itemHeight * _viewingItemCount);
         _scrollRect.onValueChanged.AddListener(OnScroll);
+        _scrollRect.enabled = false;
     }
 
     private void OnDestroy()
@@ -44,6 +45,7 @@ public class LeaderboardView : MonoBehaviour, ILeaderboardObserver      //Contro
         DestroyScoreItems();
         CreateScoreItems();
         _scrollRect.content.anchoredPosition = Vector2.zero;
+        _scrollRect.enabled = true;
     }
 
     public void DestroyScoreItems()     //Send all score items to pool.
@@ -80,7 +82,7 @@ public class LeaderboardView : MonoBehaviour, ILeaderboardObserver      //Contro
 
     private void RefreshScoreItems()    //Refreshes score items.
     {   
-        int deletedItemIndex = _scrollDirection == ScrollDireciton.Down ? _currentIndex - (_bufferSize + 1) : _currentIndex + _viewingItemCount + _bufferSize;
+        int deletedItemIndex = _scrollDirection == ScrollDireciton.Down ? _currentIndex - _bufferSize : _currentIndex + _viewingItemCount + _bufferSize;
         int addedItemIndex = _scrollDirection == ScrollDireciton.Down ? _currentIndex + (_viewingItemCount - 1) + _bufferSize : _currentIndex - _bufferSize;
         if (((_scrollDirection == ScrollDireciton.Down && _currentIndex > _bufferSize) || (_scrollDirection == ScrollDireciton.Up && _currentIndex <= _scores.Count - _viewingItemCount)) &
             deletedItemIndex >= 0 && deletedItemIndex < _scores.Count)
@@ -108,10 +110,9 @@ public class LeaderboardView : MonoBehaviour, ILeaderboardObserver      //Contro
 
     private void OnScroll(Vector2 scrollDelta)  //Calculates top of the scoreItem index which views in leaderboard panel while scrolling.
     {
-        _isUpdating = false;
         float contentPosition = _scrollRect.content.anchoredPosition.y;        
         int newCurrentIndex = Mathf.FloorToInt(contentPosition / _itemHeight);
-        if (!_isUpdating && _currentIndex != newCurrentIndex && newCurrentIndex >= 0 && newCurrentIndex <= _scores.Count - _viewingItemCount)
+        if (!_isUpdating && _currentIndex != newCurrentIndex && newCurrentIndex >= 0 && newCurrentIndex < _scores.Count - _viewingItemCount)
         {
             _isUpdating = true;
             _scrollDirection = newCurrentIndex > _currentIndex ? ScrollDireciton.Down : ScrollDireciton.Up;

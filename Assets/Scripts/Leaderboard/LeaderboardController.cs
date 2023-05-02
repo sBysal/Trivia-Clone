@@ -45,6 +45,10 @@ public class LeaderboardController : MonoBehaviour      //Leaderboard's controll
             await UpdateLeaderBoardModel();
             _leaderboardView.OnLeaderboardUpdate(_leaderboard.data); 
         }
+        else
+        {
+            CloseLeaderboardPanel();
+        }
     }
 
     public void CloseLeaderboardPanel()     //Closes leaderboard panel.

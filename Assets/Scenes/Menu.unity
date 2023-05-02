@@ -376,6 +376,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3790989480658337810, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
+      propertyPath: m_Inertia
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790989480658337810, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
+      propertyPath: m_Elasticity
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790989480658337810, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
+      propertyPath: m_MovementType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790989480658337810, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
+      propertyPath: m_DecelerationRate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3790989480658337810, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
+      propertyPath: m_ScrollSensitivity
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3790989480766964878, guid: b8728d1c15df85948aa0b25e232035f9, type: 3}
       propertyPath: m_Name
       value: MainCanvas

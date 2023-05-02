@@ -15,10 +15,10 @@ public class QuizController : MonoBehaviour     //Doing quiz jobs and controls a
     private int _score = 0;
     private bool _isAnswerable = true;
 
-    private const int TimePerQuestion = 20;
-    private const int CorrectAnswerScore = 10;
-    private const int WrongAnswerScore = -5;
-    private const int NoAnswerScore = -3;
+    private const int TIME_PER_QUESTION = 20;
+    private const int CORRECT_ANSWER_SCORE = 10;
+    private const int WRONG_ANSWER_SCORE = -5;
+    private const int NO_ANSWER_SCORE = -3;
 
 
     private void Awake()
@@ -53,7 +53,7 @@ public class QuizController : MonoBehaviour     //Doing quiz jobs and controls a
             _quizView.ClearQuestion();
             _quizView.SetQuestionText(currentQuestion.question);
             _quizView.SetQuestionChoices(currentQuestion, HandleAnswerSelected);
-            _quizView.UpdateTimerText(TimePerQuestion);
+            _quizView.UpdateTimerText(TIME_PER_QUESTION);
             _timerCoroutine = StartCoroutine(WaitForAnswer());
         }
         else
@@ -64,9 +64,9 @@ public class QuizController : MonoBehaviour     //Doing quiz jobs and controls a
 
     private IEnumerator WaitForAnswer()     //Wait coroutine for answer.
     {
-        for(int i = 0; i < TimePerQuestion; i++)        //Updates quiz view timer one time of each second.
+        for(int i = 0; i < TIME_PER_QUESTION; i++)        //Updates quiz view timer one time of each second.
         {
-            _quizView.UpdateTimerText(TimePerQuestion - i);
+            _quizView.UpdateTimerText(TIME_PER_QUESTION - i);
             yield return new WaitForSeconds(1);
         }
         HandleAnswerSelected(-1);
@@ -83,11 +83,11 @@ public class QuizController : MonoBehaviour     //Doing quiz jobs and controls a
             if (answerIndex == -1)
             {
                 _quizView.UpdateTimerText(0);
-                answerScore = NoAnswerScore;
+                answerScore = NO_ANSWER_SCORE;
             }
             else
             {
-                answerScore = _correctAnswerIndex == answerIndex ? CorrectAnswerScore : WrongAnswerScore;
+                answerScore = _correctAnswerIndex == answerIndex ? CORRECT_ANSWER_SCORE : WRONG_ANSWER_SCORE;
             }
             _score += answerScore;
             _score = _score < 0 ? 0 : _score;
