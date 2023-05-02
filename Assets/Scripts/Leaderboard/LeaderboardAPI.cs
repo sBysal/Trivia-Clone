@@ -15,11 +15,6 @@ public class LeaderboardAPI : MonoBehaviour    //Controls leaderboard api calls.
         _dataFormatter = new JsonToObjectFormatter();
     }
 
-    private void Start()
-    {
-        Task t = Task.Run(ReadLeaderboardData);
-    }
-
     public async Task<List<Score>> ReadLeaderboardData()        //Reads and returns leaderboard data.
     {
         var leaderboard = new Leaderboard();

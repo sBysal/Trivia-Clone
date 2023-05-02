@@ -1,13 +1,13 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class LeaderboardController : MonoBehaviour      //Leaderboard's controller
+public class LeaderboardController : MonoBehaviour      //Leaderboard's controller. Provides connection between the leaderboard view and leaderboard model.
 {
-    [SerializeField] private GameObject _leaderboardPanel;
     [SerializeField] private LeaderboardView _leaderboardView;
 
-
+    private GameObject _leaderboardPanel;
     private Leaderboard _leaderboard = new();
     private LeaderboardAPI _leaderboardAPI;
     private bool _isPanelOpen;
@@ -17,12 +17,13 @@ public class LeaderboardController : MonoBehaviour      //Leaderboard's controll
     {
         Application.targetFrameRate = 60;       //Prevents ui breakings.
         _leaderboardAPI = gameObject.GetComponent<LeaderboardAPI>();
-        _leaderboard.RegisterObserver(_leaderboardView);
+        _leaderboard.RegisterObserver(_leaderboardView);        //Register view to model for changes.
+        _leaderboardPanel = _leaderboardView.gameObject;
     }
 
     private void Start()
     {
-        _leaderboardPanel.SetActive(false);
+        _leaderboardView.gameObject.SetActive(false);
         _isPanelOpen = false;
     }
 
@@ -38,16 +39,19 @@ public class LeaderboardController : MonoBehaviour      //Leaderboard's controll
         if(!_isPanelOpen )
         {
             _isPanelOpen = true;
+            _leaderboardPanel.transform.localScale = Vector3.zero;
             _leaderboardPanel.SetActive(true);
+            _leaderboardPanel.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);            
             await UpdateLeaderBoardModel();
-            _leaderboardView.OnLeaderboardUpdate(_leaderboard.data);
+            _leaderboardView.OnLeaderboardUpdate(_leaderboard.data); 
         }
     }
 
     public void CloseLeaderboardPanel()     //Closes leaderboard panel.
     {
         _isPanelOpen = false;
-        _leaderboardPanel.SetActive(false);
+        _leaderboardView.DestroyScoreItems();
+        _leaderboardView.gameObject.SetActive(false);
     }
 
 

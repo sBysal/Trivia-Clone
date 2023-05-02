@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 [Serializable]
-public class Questions
+public class Quiz       //Quiz model.
 {
     public List<Question> questions;
 }

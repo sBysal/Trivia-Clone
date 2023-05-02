@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 [Serializable]
-public class Leaderboard
+public class Leaderboard    //Leaderboard Model
 {
     public int page;
     public bool is_last;
